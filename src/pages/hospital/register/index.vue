@@ -46,7 +46,9 @@
         <div class="deparment">
             <div class="leftNav">
                 <ul>
-                    <li @click="changeIndex(index)" :class="{active:index==currentIndex}" v-for="(deparment, index) in hospitalStore.deparmentArr" :key="deparment.depcode">{{ deparment.depname }}</li>
+                    <li @click="changeIndex(index)" :class="{active:index==currentIndex}" v-for="(deparment, index) in hospitalStore.deparmentArr" :key="deparment.depcode">
+                        {{ deparment.depname }}
+                    </li>
                 </ul>
             </div>
             <div class="deparmentInfo">
@@ -55,7 +57,7 @@
                     <h1 class="cur">{{ deparment.depname }}</h1>
                     <!-- 每一个大的科室下的小科室 -->
                     <ul>
-                        <li @click="showLogin" v-for="(item) in deparment.children" :key="item.depcode">{{ item.depname }}</li>
+                        <li @click="showLogin(item)" v-for="(item) in deparment.children" :key="item.depcode">{{ item.depname }}</li>
                     </ul>
                 </div>
             </div>
@@ -68,8 +70,17 @@
 import useDetailStore from '@/store/modules/hospitalDetail';
 import { ref } from 'vue';
 import useUserStore from '@/store/modules/interface/user';
+import { useRouter,useRoute } from 'vue-router';
+
 let userStore = useUserStore()
 let hospitalStore = useDetailStore()
+
+
+// 获取路由器
+let $router = useRouter() 
+// 获取路由对象
+let $route = useRoute()
+
 
 // 控制科室高亮的响应式数据
 let currentIndex = ref<number>(0)
@@ -87,8 +98,15 @@ const changeIndex = (index:number) => {
 }
 
 // 点击科室出现登录框
-const showLogin = () => {
-    userStore.visiable = true
+    // item：用户选中科室的数据
+const showLogin = (item:any) => {
+    console.log(item);
+    
+    // 点击某一个医院科室按钮，进入到相应的预约挂号详情页面
+    // 跳转到预约挂号详情页面
+    $router.push({path:'/hospital/registerStep1',query:{hoscode:$route.query.hoscode,depcode:item.depcode}})
+    // 登录组件对话框弹出来
+    // userStore.visiable = true
 }
 </script>
 
