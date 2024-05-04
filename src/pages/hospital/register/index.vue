@@ -100,8 +100,6 @@ const changeIndex = (index:number) => {
 // 点击科室出现登录框
     // item：用户选中科室的数据
 const showLogin = (item:any) => {
-    console.log(item);
-    
     // 点击某一个医院科室按钮，进入到相应的预约挂号详情页面
     // 跳转到预约挂号详情页面
     $router.push({path:'/hospital/registerStep1',query:{hoscode:$route.query.hoscode,depcode:item.depcode}})

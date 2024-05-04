@@ -152,7 +152,7 @@ import { ref, reactive, computed, watch } from "vue";
 // 获取user仓库的数据(visiable)可以控制login组件的对话框显示与隐藏
 import useUserStore from "@/store/modules/interface/user";
 let userStore = useUserStore();
-
+import { useRoute,useRouter } from "vue-router";
 // 引入wx扫码登录参数请求
 import { reqWxLogin } from "@/api/hospital";
 import type { WXLoginResponseData } from "@/api/hospital/type";
@@ -166,6 +166,12 @@ let flag = ref<boolean>(false) //flag为真，开启倒计时
 let form = ref<any>()
 
 let scene = ref<number>(0); //0代表手机号码登录 1：微信扫码登录
+
+// 获取路由器对象
+let $route = useRoute()
+let $router = useRouter()
+
+
 // 点击微信扫码登录 | 微信小图标
 const changeScene = async() => {
   scene.value = 1;
@@ -247,6 +253,13 @@ const login = async() => {
         await  userStore.userLogin(loginParam)
         // 关闭对话框
         userStore.visiable = false
+        // 获取url的query参数
+        let redirect = $route.query.redirect
+        if(redirect) {
+          $router.push(redirect as string)
+        }else{
+          $router.push('./home')
+        }
    } catch (error) {
     ElMessage({
         type: "error",

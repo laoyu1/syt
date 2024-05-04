@@ -19,7 +19,8 @@ enum API {
     //获取某一个账号下就诊人的信息
     GETUSER_URL = '/user/patient/auth/findAll',
     //获取挂号医生的信息
-    GETDOCTOR_URL='/hosp/hospital/getSchedule/'
+    GETDOCTOR_URL='/hosp/hospital/getSchedule/',
+    
 }
 //获取医院详情的接口
 export const reqHospitalDetail = (hoscode: string) => request.get<any, HospitalDetail>(API.HOSPITALDETAIL_URL + hoscode);

@@ -11,15 +11,16 @@ import Login from '@/components/login/index.vue'
 import router from './router'
 
 // 引入element-plus 插件
-import ElementPlus from 'element-plus'
+import ElementPlus, { autocompleteEmits } from 'element-plus'
 import 'element-plus/dist/index.css'
 import zhCn from 'element-plus/es/locale/lang/zh-cn'
-
+import Visitor from './components/visitor/visitor.vue'
 // 引入pinia仓库
 import pinia from '@/store'
 
 const app = createApp(App)
-
+// 就诊人全局组件
+app.component('Visitor', Visitor )
 app.component('HospitalTop', HospitalTop)
 app.component('HospitalButton', HospitalButton)
 app.component('Login', Login)
@@ -33,6 +34,9 @@ app.use(ElementPlus, {
 
 // 安装pinia仓库
 app.use(pinia)
+
+// 引入路由鉴权文件
+import './permisstion'
 
 // 挂载
 app.mount('#app')
